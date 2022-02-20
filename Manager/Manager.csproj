@@ -45,7 +45,6 @@
     <Compile Include="Audit.cs" />
     <Compile Include="AuditEvents.cs" />
     <Compile Include="CertManager.cs" />
-    <Compile Include="ClientCertValidator.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AuditEventFile.Designer.cs">

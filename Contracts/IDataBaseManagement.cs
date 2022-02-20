@@ -44,6 +44,10 @@ namespace Contracts
         [OperationContract]
         void TestCommunication();
 
-       
+        [FaultContract(typeof(SecurityException))]
+        [OperationContract]
+        bool CheckID(int id);
+
+
     }
 }

@@ -65,10 +65,9 @@ namespace ServiceApp
             try
             {
                 host.Open();
-                Console.WriteLine(Formatter.ParseName(WindowsIdentity.GetCurrent().Name));
+              
                 Console.WriteLine("WCFService is started.\nPress <enter> to stop ...");
-                Console.WriteLine(host.Credentials.ServiceCertificate.Certificate.SubjectName.Name);
-                Console.WriteLine("Ovde pises");
+               
                 Console.ReadLine();
             }
             catch (Exception e)

@@ -225,8 +225,7 @@ namespace ServiceApp
                     }
                     suma = 0;
                 }
-                Console.WriteLine(consumers[id]);
-                
+              
                 if (id == 0)
                 {
                     try
@@ -713,12 +712,11 @@ namespace ServiceApp
             {
                 fInput.Close();
             }
-            Console.WriteLine(ASCIIEncoding.ASCII.GetString(buffer));
 
             return ASCIIEncoding.ASCII.GetString(buffer);
         }
 
-        public void WriteDecryptedData(byte[] encryptedData)
+        public string WriteDecryptedData(byte[] encryptedData)
         {
             string plaintext = null;
 
@@ -757,14 +755,20 @@ namespace ServiceApp
                 }
 
             }
-            File.WriteAllText("Kikiriki.txt", plaintext);
+            return plaintext;
+            
 
         }
 
-        public byte[] ReadData()
+
+        public bool CheckID(int id)
         {
-            byte[] miki = File.ReadAllBytes(DataBase);
-            return miki;
+            Dictionary<int, Consumer> consumers = ReadDB(DataBase);
+            if (consumers.ContainsKey(id))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -13,9 +13,8 @@ namespace Contracts
         byte[] ReadCryptedData();
 
         [OperationContract]
-        void WriteDecryptedData(byte[] encryptedData);
+        string WriteDecryptedData(byte[] encryptedData);
 
-        [OperationContract]
-        byte[] ReadData();
+       
     }
 }

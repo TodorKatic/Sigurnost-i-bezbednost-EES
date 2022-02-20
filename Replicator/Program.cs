@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Replicator
@@ -19,28 +20,35 @@ namespace Replicator
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
             NetTcpBinding binding2 = new NetTcpBinding();
-            byte[] cryptedData = null;
+            string decryptedData;
+            byte[] data = null;
 
-            try
+            while (true)
             {
-                ChannelFactory<IReplicate> cfService = new ChannelFactory<IReplicate>(binding, "net.tcp://localhost:9998/IReplicate");
-                ChannelFactory<IReplicate> cfReplicator = new ChannelFactory<IReplicate>(binding2, "net.tcp://localhost:9998/IReplicate");
-                IReplicate kService = cfService.CreateChannel();
-                IReplicate kReplicator = cfReplicator.CreateChannel();
-               
-                Console.WriteLine(WindowsIdentity.GetCurrent().Name);
+                try
+                {
+                    ChannelFactory<IReplicate> cfService = new ChannelFactory<IReplicate>(binding, "net.tcp://localhost:9998/IReplicate");
+                    ChannelFactory<IReplicate> cfReplicator = new ChannelFactory<IReplicate>(binding2, "net.tcp://localhost:9998/IReplicate");
+                    IReplicate kService = cfService.CreateChannel();
+                    IReplicate kReplicator = cfReplicator.CreateChannel();
 
-               byte[] data =  kService.ReadCryptedData();
-                
+                    
 
-                //cryptedData = kService.ReadCryptedData();
-                kReplicator.WriteDecryptedData(data);
+                    data = kService.ReadCryptedData();
 
 
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
+                    //cryptedData = kService.ReadCryptedData();
+                    decryptedData=kReplicator.WriteDecryptedData(data);
+                    File.WriteAllText("Kikiriki.txt", decryptedData);
+
+                    Console.WriteLine("Podaci replicirani");
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                }
+                Thread.Sleep(10000);
             }
 
             Console.ReadKey();

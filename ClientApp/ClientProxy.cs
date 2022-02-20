@@ -162,5 +162,19 @@ namespace ClientApp
 
             this.Close();
         }
+
+        public bool CheckID(int id)
+        {
+            bool retVal = false;
+            try
+            {
+                retVal = factory.CheckID(id);
+            }
+            catch (FaultException<SecurityException> e)
+            {
+                Console.WriteLine("Error while trying to CheckID : {0}", e.Detail.Message);
+            }
+            return retVal;
+        }
     }
 }

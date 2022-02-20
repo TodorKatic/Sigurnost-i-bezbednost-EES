@@ -107,6 +107,11 @@ namespace ClientApp
                             Consumer potrosac = new Consumer();
                             Console.WriteLine("Unesite ID potrosaca:");
                             id = int.Parse(Console.ReadLine());
+                            if (proxy.CheckID(id))
+                            {
+                                Console.WriteLine("Potrosac sa tim ID-em vec postoji u bazi");
+                                break;
+                            }
                             Console.WriteLine("Unesite ime regiona:");
                             read = Console.ReadLine();
                             potrosac.Region = read;
@@ -138,6 +143,11 @@ namespace ClientApp
                             potrosac = new Consumer();
                             Console.WriteLine("Unesite ID potrosaca:");
                             id = int.Parse(Console.ReadLine());
+                            if (!proxy.CheckID(id))
+                            {
+                                Console.WriteLine("Potrosac sa tim ID-em ne postoji u bazi");
+                                break;
+                            }
                             Console.WriteLine("Unesite ime regiona:");
                             read = Console.ReadLine();
                             potrosac.Region = read;
@@ -151,7 +161,7 @@ namespace ClientApp
 
                             for (int i = 0; i < 12; i++)
                             {
-                                Console.WriteLine("{0}. mesec", i);
+                                Console.WriteLine("{0}. mesec", i+1);
                                 lista.Add(int.Parse(Console.ReadLine()));
                             }
                             potrosac.Amount = lista;
